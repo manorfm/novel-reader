@@ -1,0 +1,21 @@
+{
+  "name": "reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --experimental-specifier-resolution=node ./loader.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "got": "^11.8.2",
+    "jsdom": "^16.6.0",
+    "nodemon": "^2.0.7"
+  }
+}

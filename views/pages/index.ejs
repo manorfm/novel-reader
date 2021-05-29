@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="app.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <main>
+                <%- include("../partials/pagination"); %>
+                <br/>
+                <br/>
+                <div>
+                    <% contents.forEach(p => { %>
+                        <p><%=p%></p>
+                    <%})%>
+                </div>
+                <br/>
+                <br/>
+                <%- include("../partials/pagination"); %>
+            </main>
+        </div>
+    </body>
+</html>
