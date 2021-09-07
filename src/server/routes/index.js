@@ -10,12 +10,14 @@ export default class Router {
 
             const htmlExtractor = new HTMLExtractor()
             
-            const page = await htmlExtractor.extract(`${url}${chapter}`)
+            let page = await htmlExtractor.extract(`${url}${chapter}`)
 
-            if (page) {
-                res.status(200)
-                    .render('pages/index', { page, chapter })
+            if (!page.contents) {
+                page = { ...page, contents: [`Chapter ${chapter} is coming soon...`]}
             }
+
+            res.status(200)
+                .render('pages/index', { page, chapter })
         })
     }
 }
