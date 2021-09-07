@@ -1,11 +1,8 @@
-<form action='/site' method="get">
-    <div class="center">
-        <div class="center">
-            <label for="chapter">Chapter: </label><input type="text" name="chapter" value="<%= chapter%>">
-        </div>
-        <div class="center">
-            <a href="/site?chapter=<%= chapter - 1%>">previous</a>
-            <a href="/site?chapter=<%= +chapter + 1%>">next</a>
-        </div>
+<form action='/' method="get">
+    <div id="navigation" class="center">
+        <a href="/?chapter=<%= chapter - 1%>">previous</a>
+        <label for="chapter">Chapter: </label>
+        <input type="text" id="chapter" name="chapter" value="<%= chapter%>">
+        <a href="/?chapter=<%= +chapter + 1%>">next</a>
     </div>
 </form>

@@ -7,13 +7,17 @@ body {
 }
 
 .center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+  margin: auto;
+  width: 56%;
+  padding: 10px;
 }
 
 a {
     padding: 20px;
+}
+
+.navigation {
+  padding-top: 60px;
 }
 
 .container {

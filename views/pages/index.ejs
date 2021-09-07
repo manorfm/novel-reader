@@ -10,12 +10,22 @@
             <main>
                 <%- include("../partials/pagination"); %>
                 <br/>
-                <br/>
+
+                <p><%=page.title%></p>
+                <hr>
+
                 <div>
-                    <% contents.forEach(p => { %>
+                    <% page.contents.forEach(p => { %>
                         <p><%=p%></p>
                     <%})%>
                 </div>
+                
+                <hr>
+                <% if (page.infos) {
+                    page.infos.forEach(p => { %>
+                        <p><%=p%></p>
+                    <%})
+                }%>
                 <br/>
                 <br/>
                 <%- include("../partials/pagination"); %>
