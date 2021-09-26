@@ -29,6 +29,17 @@
                 <br/>
                 <br/>
                 <%- include("../partials/pagination"); %>
+
+                <p>
+                <% if (page.navigator && page.navigator.nextChapters) {
+                %>
+                <hr>
+                don't fret, still have more: 
+                    <% page.navigator.nextChapters.forEach(p => { %>
+                        <%=p%>
+                    <%})
+                }%>
+                </p>
             </main>
         </div>
     </body>

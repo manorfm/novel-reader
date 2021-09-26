@@ -1,7 +1,7 @@
 {
   "name": "reader",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "scrapes current my favorite novel to show more cleaner without toast my ipad battery",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node ./loader.js",

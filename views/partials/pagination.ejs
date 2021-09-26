@@ -1,8 +1,15 @@
 <form action='/' method="get">
     <div id="navigation" class="center">
-        <a href="/?chapter=<%= chapter - 1%>">previous</a>
+        <% if (page.navigator && page.navigator.previousPage) { %>
+            <a href="/?chapter=<%= page.navigator.previousPage %>">previous</a>
+        <% } else { %>
+            <a href="/?chapter=<%= chapter - 1%>">previous</a>
+        <%}%>
         <label for="chapter">Chapter: </label>
         <input type="text" id="chapter" name="chapter" value="<%= chapter%>">
-        <a href="/?chapter=<%= +chapter + 1%>">next</a>
+
+        <% if (page.navigator && page.navigator.nextPage) { %>
+            <a href="/?chapter=<%= page.navigator.nextPage %>">next</a>
+        <% } %>
     </div>
 </form>

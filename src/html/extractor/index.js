@@ -8,34 +8,109 @@ export default class HTMLExtractor {
             const response = await got(url);
             const { document: body } = new JSDOM(response.body).window;
 
-            //const content = document.querySelectorAll('div.chapter-content3 div.desc p');
             const content = body.querySelectorAll('#chapterhidden p');
-
-            const chapters = body.querySelectorAll('ul.chapter-actions li select')
-
-            // console.log(chapters.values())
-            // console.log(chapters.options)
-
             const episode = Array.from(content.values())
 
-            return episode.map(p => p.innerHTML)
-                .filter(line => !line.startsWith('Tip:'))
+            const page = {
+                navigator: this.buildNavigator(body)
+            }
+            return episode
+                .map(p => this.transform(p.innerHTML))
+                .filter(line => line && !this.isToIgnore(line))
                 .reduce((previous, current) => {
                     const line = current.trim();
-                    if (line.startsWith('If you find any errors') || line.trim().startsWith('Tip:')) {
-                        return previous; // ignore lines
-                    }
                     if (line.startsWith('Chapter')) {
-                        return { ...previous, title: this.formatChapter(line) }
+                        return { ...previous, title: this.formatChapter(line) };
                     }
-                    if (line.startsWith('Translation') || line.startsWith('Editor') || line.startsWith('Translator')) {
-                        return this.toArray(previous, line, 'infos')
+                    if (this.isInfo(line)) {
+                        return this.toArray(previous, line, 'infos');
                     }
-                    return this.toArray(previous, line, 'contents')
-                }, {})
+                    return this.toArray(previous, line, 'contents');
+                }, page)
         } catch (error) {
             console.log(error);
         }
+        return {}
+    }
+
+    buildNavigator(body) {
+        const optionsChaptersNode = body.querySelector('ul.chapter-actions li select')
+
+        if (optionsChaptersNode) {
+            const options = optionsChaptersNode.querySelectorAll('option');
+            
+            if (options) {
+                const optionsChapters = Array.from(options.values())
+    
+                let page = {
+                    nextChapters: []
+                }
+                let selected = false;
+                for (let i = 0; i < optionsChapters.length; i++) {
+                    const option = optionsChapters[i];
+                    if (option.disabled || (!selected && !option.selected)) {
+                        continue;
+                    }
+    
+                    if (option.selected) {
+                        selected = true;
+                        const previousOption = optionsChapters[i - 1];
+                        const nextOption = optionsChapters[i + 1];
+                        page = {
+                            ...page,
+                            previousPage: this.extractChapter(previousOption.value),
+                            nextPage: this.extractChapter(nextOption.value),
+                            
+                        }
+                        continue;
+                    }
+    
+                    const { nextChapters } = page;
+    
+                    const { value } = option;
+                    nextChapters.push(this.extractChapter(value))
+                }
+    
+                return page;
+            }
+        }
+    }
+
+    extractChapter(value) {
+        const offset = "chapter-".length;
+        const index = value.indexOf("chapter-") + offset;
+        const pageIndex = value.substring(index)
+        return pageIndex;
+    }
+
+    transform(line) {
+        return line
+            .replace(/(&amp;|<strong>|<\/strong>)/gi, '')
+            .replace(/&nbsp;/gi, ' ')
+            .trim();
+    }
+
+    isToIgnore(line) {
+        const infos = [
+            ' ',
+            'If you find any errors',
+            'Tip:',
+            'For more chapters visit',
+            'Visit lightnovelreader.com'
+        ]
+
+        return infos.some(info => line.startsWith(info))
+    }
+
+    isInfo(line) {
+        const infos = [
+            'Translation',
+            'Editor',
+            'Translator',
+            'Proofreader:'
+        ]
+
+        return infos.some(info => line.startsWith(info))
     }
 
     toArray(previous, current, field) {
