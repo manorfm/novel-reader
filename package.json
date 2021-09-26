@@ -1,6 +1,6 @@
 {
   "name": "reader",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "scrapes current my favorite novel to show more cleaner without toast my ipad battery",
   "main": "index.js",
   "scripts": {
