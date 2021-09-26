@@ -96,7 +96,7 @@ export default class HTMLExtractor {
             'If you find any errors',
             'Tip:',
             'For more chapters visit',
-            'Visit lightnovelreader.com'
+            'Visit lightnovelreader'
         ]
 
         return infos.some(info => line.startsWith(info))
