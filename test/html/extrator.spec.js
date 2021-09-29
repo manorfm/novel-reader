@@ -153,6 +153,6 @@ describe('Testing extractor', () => {
 
     expect(content.infos).toStrictEqual(expectedInfo)
     expect(content.contents).toStrictEqual(expectedContents)
-    expect(content.page).toStrictEqual(page)
+    expect(content.navigator).toStrictEqual(page)
   });
 });
